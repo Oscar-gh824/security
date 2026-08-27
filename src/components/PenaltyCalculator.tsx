@@ -53,7 +53,9 @@ export function PenaltyCalculator() {
           <p className="penalty-amount">
             {estimate.minWon === 0 && estimate.maxWon === 0
               ? "과태료 없음"
-              : `${formatWon(estimate.minWon)} ~ ${formatWon(estimate.maxWon)}`}
+              : estimate.minWon === estimate.maxWon
+                ? formatWon(estimate.minWon)
+                : `${formatWon(estimate.minWon)} ~ ${formatWon(estimate.maxWon)}`}
           </p>
           <p className="sub-text">{estimate.note}</p>
           <p className="sub-text">
