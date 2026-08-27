@@ -1,13 +1,13 @@
 import type { DeadlineResult } from "../types";
 import { formatDateKorean, parseDate } from "../utils/date";
 import { getUrgencyLevel, urgencyLabel } from "../utils/urgency";
+import { CertifiedDateMethod } from "./CertifiedDateMethod";
 import { GlossaryTerm } from "./GlossaryTerm";
 import { CalendarIcon, LinkIcon } from "./icons";
 import { officialLinks } from "../data/links";
 
 const LINK_MAP: Record<string, string[]> = {
   moveIn: ["gov24"],
-  certifiedDate: ["iros"],
   rentReport: ["rtms"],
 };
 
@@ -83,11 +83,7 @@ export function DeadlineCard({ deadline }: DeadlineCardProps) {
         </div>
       )}
 
-      {deadline.id === "certifiedDate" && (
-        <p className="sub-text" style={{ marginTop: 8 }}>
-          방문 접수: 주소지 관할 등기소 또는 주민센터에서도 받을 수 있어요.
-        </p>
-      )}
+      {deadline.id === "certifiedDate" && <CertifiedDateMethod />}
 
       {deadline.legalBasis && (
         <p className="deadline-legal-basis">법적 근거: {deadline.legalBasis}</p>

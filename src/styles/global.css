@@ -345,6 +345,18 @@ button {
   margin-top: 12px;
 }
 
+.certified-date-method {
+  margin-top: 12px;
+}
+
+.certified-date-method-body {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
 .deadline-legal-basis {
   margin-top: 10px;
   font-size: 12px;
