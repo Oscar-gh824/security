@@ -88,6 +88,10 @@ export function DeadlineCard({ deadline }: DeadlineCardProps) {
           방문 접수: 주소지 관할 등기소 또는 주민센터에서도 받을 수 있어요.
         </p>
       )}
+
+      {deadline.legalBasis && (
+        <p className="deadline-legal-basis">법적 근거: {deadline.legalBasis}</p>
+      )}
     </div>
   );
 }

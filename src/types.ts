@@ -33,6 +33,8 @@ export interface DeadlineResult {
   /** 오늘 기준 D-day (음수면 지남) */
   dDay?: number;
   description: string;
+  /** 법적 근거 (조문) */
+  legalBasis?: string;
 }
 
 export interface ChecklistItem {

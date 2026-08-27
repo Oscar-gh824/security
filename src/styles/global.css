@@ -345,6 +345,12 @@ button {
   margin-top: 12px;
 }
 
+.deadline-legal-basis {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--sub);
+}
+
 /* ===== 용어 툴팁 ===== */
 .glossary-term {
   position: relative;
