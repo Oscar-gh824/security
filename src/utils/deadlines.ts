@@ -38,7 +38,7 @@ export function calculateDeadlines(info: MoveInInfo): DeadlineResult[] {
       dDay: diffFromToday(moveIn),
       description:
         "법으로 정해진 마감일은 없지만, 전입신고와 같은 날 받아야 대항력·우선변제권을 가장 빨리 확보할 수 있어요.",
-      legalBasis: "주택임대차보호법 제3조, 제3조의2",
+      legalBasis: "주택임대차보호법 제3조, 제3조의2, 제3조의6",
     });
   }
 
