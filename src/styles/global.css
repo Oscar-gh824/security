@@ -1,0 +1,527 @@
+/* ===== 디자인 시스템: 색 조합(토스·클린 블루) / 버튼(라운드) / 폰트(Noto Sans KR) / 아이콘(둥근 라인) ===== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+:root {
+  --primary: #3182f6;
+  --primary-dark: #1b64da;
+  --text: #4e5968;
+  --sub: #8b95a1;
+  --bg: #f2f4f6;
+  --surface: #ffffff;
+  --border: #e5e8eb;
+
+  /* 긴급도 강조용 보조 컬러 */
+  --danger: #f04452;
+  --danger-bg: #fff0f1;
+  --warning: #ff9800;
+  --warning-bg: #fff7e8;
+  --safe: #04c880;
+  --safe-bg: #e7faf3;
+
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-card: 0 2px 10px rgba(20, 30, 50, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  margin: 0;
+  color: #191f28;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* 버튼 모양: 라운드 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: var(--radius-md);
+  padding: 12px 20px;
+  font-weight: 700;
+  font-size: 15px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.btn:hover {
+  filter: brightness(0.95);
+}
+.btn:active {
+  filter: brightness(0.9);
+}
+.btn:disabled {
+  background: var(--sub);
+  cursor: not-allowed;
+  filter: none;
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+}
+.btn-secondary:hover {
+  background: #eef4ff;
+  filter: none;
+}
+
+.btn-sm {
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: var(--radius-sm);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* 아이콘: 둥근 라인 */
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* ===== 레이아웃 공통 ===== */
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 0 64px;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.section {
+  padding: 24px 20px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 20px;
+}
+
+.card + .card {
+  margin-top: 12px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  margin-bottom: 14px;
+  color: #191f28;
+}
+
+.section-title .icon {
+  color: var(--primary);
+}
+
+.sub-text {
+  color: var(--sub);
+  font-size: 13px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--surface);
+  transition: border-color 0.15s;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.segmented {
+  display: flex;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.segmented button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: var(--surface);
+  color: var(--sub);
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.segmented button.active {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ===== Header ===== */
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-badge {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  background: #eaf2ff;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-title {
+  font-size: 20px;
+}
+
+.header-subtitle {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--sub);
+}
+
+/* ===== Footer ===== */
+.footer {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 20px 8px;
+  color: var(--sub);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* ===== 자동 판정 결과 / D-day 강조 ===== */
+.deadline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.deadline-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.deadline-card-head h3 {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.badge-safe {
+  background: var(--safe-bg);
+  color: var(--safe);
+}
+.badge-soon {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+.badge-urgent,
+.badge-overdue {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.deadline-card--urgent,
+.deadline-card--overdue {
+  border-color: var(--danger);
+}
+.deadline-card--soon {
+  border-color: var(--warning);
+}
+.deadline-card--muted {
+  opacity: 0.8;
+}
+
+.deadline-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.deadline-desc {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.deadline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* ===== 용어 툴팁 ===== */
+.glossary-term {
+  position: relative;
+  display: inline-block;
+}
+
+.glossary-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border: none;
+  background: none;
+  color: var(--primary);
+  font: inherit;
+  font-weight: 700;
+  font-size: inherit;
+  cursor: pointer;
+  padding: 0;
+  border-bottom: 1px dashed var(--primary);
+}
+
+.glossary-tooltip {
+  position: absolute;
+  z-index: 5;
+  top: 130%;
+  left: 0;
+  width: 240px;
+  background: #191f28;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+}
+
+/* ===== 체크리스트 ===== */
+.checklist-group-title {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.checklist-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.checklist-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.checklist-item-label {
+  font-weight: 500;
+}
+
+/* ===== 공식 사이트 바로가기 ===== */
+.quick-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.quick-link-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.quick-links li:last-child .quick-link-item {
+  border-bottom: none;
+}
+
+.quick-link-item .icon {
+  color: var(--sub);
+}
+
+.quick-link-label {
+  font-weight: 700;
+  color: #191f28;
+  font-size: 15px;
+}
+
+/* ===== 과태료 계산기 ===== */
+.penalty-result {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border);
+}
+
+.penalty-amount {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 6px;
+}
+
+/* ===== FAQ ===== */
+.faq-card {
+  padding: 8px 20px;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  color: #191f28;
+  cursor: pointer;
+  padding: 0;
+}
+
+.faq-question .icon {
+  color: var(--sub);
+  transition: transform 0.15s;
+}
+
+.faq-answer {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+@media (min-width: 720px) {
+  .header-inner,
+  .footer {
+    max-width: 880px;
+  }
+
+  .page {
+    max-width: 880px;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .grid-2 > .card {
+    margin-top: 0;
+  }
+}
