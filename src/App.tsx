@@ -46,7 +46,7 @@ function App() {
         onCertifiedDateMethodChange={setCertifiedDateMethod}
       />
       <QuickLinks />
-      <PenaltyCalculator />
+      <PenaltyCalculator defaultDepositAmount={moveInInfo.depositAmount} />
       <FaqSection />
       <Footer />
     </div>

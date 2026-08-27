@@ -7,11 +7,30 @@ const PROCEDURE_LABEL: Record<PenaltyProcedure, string> = {
   rentReport: "전월세 신고",
 };
 
-export function PenaltyCalculator() {
+interface PenaltyCalculatorProps {
+  /** 이사 정보 입력 폼의 보증금을 기본값으로 채워 입력 수고를 줄여줌 */
+  defaultDepositAmount?: number;
+}
+
+export function PenaltyCalculator({ defaultDepositAmount }: PenaltyCalculatorProps) {
   const [procedure, setProcedure] = useState<PenaltyProcedure>("moveIn");
   const [daysLate, setDaysLate] = useState(0);
+  const [depositAmount, setDepositAmount] = useState(defaultDepositAmount ?? 0);
 
-  const estimate = estimatePenalty(procedure, daysLate);
+  const estimate = estimatePenalty(
+    procedure,
+    daysLate,
+    procedure === "rentReport" ? depositAmount : undefined
+  );
+
+  const isNone = estimate.minWon === 0 && estimate.maxWon === 0;
+  const displayAmount = isNone
+    ? "과태료 없음"
+    : estimate.pointWon !== undefined
+      ? `약 ${formatWon(estimate.pointWon)}`
+      : estimate.minWon === estimate.maxWon
+        ? formatWon(estimate.minWon)
+        : `${formatWon(estimate.minWon)} ~ ${formatWon(estimate.maxWon)}`;
 
   return (
     <section className="section">
@@ -49,15 +68,26 @@ export function PenaltyCalculator() {
           />
         </div>
 
+        {procedure === "rentReport" && (
+          <div className="field">
+            <label htmlFor="penaltyDepositAmount">계약금액 (보증금, 만원)</label>
+            <input
+              id="penaltyDepositAmount"
+              type="number"
+              min={0}
+              inputMode="numeric"
+              value={depositAmount}
+              onChange={(e) => setDepositAmount(Math.max(0, Number(e.target.value)))}
+            />
+          </div>
+        )}
+
         <div className="penalty-result">
-          <p className="penalty-amount">
-            {estimate.minWon === 0 && estimate.maxWon === 0
-              ? "과태료 없음"
-              : estimate.minWon === estimate.maxWon
-                ? formatWon(estimate.minWon)
-                : `${formatWon(estimate.minWon)} ~ ${formatWon(estimate.maxWon)}`}
-          </p>
+          <p className="penalty-amount">{displayAmount}</p>
           <p className="sub-text">{estimate.note}</p>
+          {procedure === "rentReport" && estimate.pointWon === undefined && !isNone && (
+            <p className="sub-text">계약금액을 입력하면 더 구체적인 예상 금액을 볼 수 있어요.</p>
+          )}
           <p className="sub-text">
             * 실제 지자체 조례·개별 사정에 따라 달라질 수 있는 참고용 추정치예요.
           </p>
