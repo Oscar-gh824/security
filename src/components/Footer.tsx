@@ -12,6 +12,10 @@ export function Footer() {
         정부24, 국토교통부, 관할 주민센터·등기소 등 공식 기관을 통해 반드시 다시 확인해주세요.
       </p>
       <p style={{ marginTop: 6 }}>정보 기준일: {LAST_UPDATED}</p>
+      <nav className="footer-nav">
+        <a href="/guide/">사용 방법</a>
+        <a href="/privacy/">개인정보처리방침</a>
+      </nav>
     </footer>
   );
 }

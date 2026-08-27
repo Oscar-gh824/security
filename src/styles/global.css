@@ -268,6 +268,47 @@ button {
   line-height: 1.7;
 }
 
+.footer-nav {
+  display: flex;
+  gap: 16px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-nav a {
+  color: var(--sub);
+  text-decoration: underline;
+  font-size: 12px;
+}
+
+/* ===== 개인정보처리방침 / 사용방법 등 글 형태 페이지 ===== */
+.prose h1 {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.prose h2 {
+  font-size: 17px;
+  margin-top: 28px;
+  margin-bottom: 10px;
+}
+
+.prose p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-top: 10px;
+}
+
+.prose a {
+  text-decoration: underline;
+}
+
+.header-title a {
+  color: inherit;
+}
+
 /* ===== 자동 판정 결과 / D-day 강조 ===== */
 .deadline-list {
   display: flex;

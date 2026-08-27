@@ -6,7 +6,7 @@ export function FaqSection() {
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
-    <section className="section">
+    <section className="section" id="faq">
       <h2 className="section-title">
         <QuestionIcon />
         자주 묻는 질문
