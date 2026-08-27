@@ -5,9 +5,18 @@ export const checklistGroups: ChecklistGroup[] = [
     id: "moveIn",
     title: "전입신고 준비물",
     items: [
-      { id: "moveIn-id", label: "신분증", detail: "주민등록증, 운전면허증 등" },
-      { id: "moveIn-contract", label: "임대차계약서", detail: "원본 또는 사본" },
-      { id: "moveIn-stamp", label: "도장 또는 서명", detail: "무인 신청 시 필요할 수 있어요" },
+      { id: "moveIn-id", label: "신분증", detail: "신청인(세대주 또는 세대원) 본인 신분증" },
+      { id: "moveIn-stamp", label: "도장 또는 서명", detail: "전입신고서 작성 시 필요 (도장·서명 중 택1)" },
+      {
+        id: "moveIn-contract",
+        label: "임대차계약서 (선택)",
+        detail: "전입신고 자체엔 필요 없지만, 확정일자를 동시에 신청하려면 스캔본을 준비하세요",
+      },
+      {
+        id: "moveIn-proxy",
+        label: "위임장 및 위임인 신분증 사본",
+        detail: "본인이 아닌 대리인이 신고할 때만 필요",
+      },
     ],
   },
   {
