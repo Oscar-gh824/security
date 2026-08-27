@@ -19,7 +19,8 @@ export function CertifiedDateMethod({ method, onChange }: CertifiedDateMethodPro
       {method === "online" ? (
         <div className="certified-date-method-body">
           <p className="sub-text">
-            인터넷등기소에서 공동인증서로 온라인 신청할 수 있어요. 임대차계약서 스캔본을 준비해주세요.
+            인터넷등기소에서 공동인증서·금융인증서·간편인증 등으로 온라인 신청할 수 있어요. 임대차계약서
+            스캔본과 수수료(약 500원)를 준비해주세요.
           </p>
           {irosLink && (
             <a href={irosLink.url} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm">
@@ -31,7 +32,7 @@ export function CertifiedDateMethod({ method, onChange }: CertifiedDateMethodPro
       ) : (
         <p className="sub-text certified-date-method-body">
           방문 접수: 주소지 관할 등기소 또는 주민센터에서 임대차계약서 원본과 신분증을 지참하면 받을 수
-          있어요. 방문 시에는 소액의 수수료가 있어요.
+          있어요. 방문 시 수수료는 약 600원이에요.
         </p>
       )}
     </div>
