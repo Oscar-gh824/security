@@ -14,9 +14,11 @@ export const checklistGroups: ChecklistGroup[] = [
     id: "certifiedDate",
     title: "확정일자 준비물",
     items: [
-      { id: "cert-contract", label: "임대차계약서 원본", detail: "온라인 신청 시 스캔본" },
-      { id: "cert-cert", label: "공동인증서(온라인 신청 시)", detail: "인터넷등기소 이용 시 필요" },
-      { id: "cert-fee", label: "수수료", detail: "방문 접수 시 소액의 수수료가 있어요" },
+      { id: "cert-contract-online", label: "임대차계약서 스캔본", detail: "인터넷등기소 업로드용", methods: ["online"] },
+      { id: "cert-cert-online", label: "공동인증서", detail: "인터넷등기소 로그인 시 필요", methods: ["online"] },
+      { id: "cert-contract-visit", label: "임대차계약서 원본", detail: "방문 접수 시 지참", methods: ["visit"] },
+      { id: "cert-id-visit", label: "신분증", detail: "주민등록증, 운전면허증 등", methods: ["visit"] },
+      { id: "cert-fee-visit", label: "수수료", detail: "방문 접수 시 소액의 수수료가 있어요", methods: ["visit"] },
     ],
   },
   {

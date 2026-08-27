@@ -1,15 +1,39 @@
 import { checklistGroups } from "../data/checklist";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import type { CertifiedDateMethod } from "../types";
+import { CertifiedDateMethodToggle } from "./CertifiedDateMethodToggle";
 import { ChecklistIcon } from "./icons";
 
-export function ChecklistSection() {
+interface ChecklistSectionProps {
+  certifiedDateMethod: CertifiedDateMethod;
+  onCertifiedDateMethodChange: (method: CertifiedDateMethod) => void;
+}
+
+export function ChecklistSection({
+  certifiedDateMethod,
+  onCertifiedDateMethodChange,
+}: ChecklistSectionProps) {
   const [checked, setChecked] = useLocalStorage<Record<string, boolean>>(
     "boggl-guard-checklist",
     {}
   );
 
-  const totalItems = checklistGroups.reduce((sum, g) => sum + g.items.length, 0);
-  const doneItems = Object.values(checked).filter(Boolean).length;
+  const visibleGroups = checklistGroups.map((group) =>
+    group.id === "certifiedDate"
+      ? {
+          ...group,
+          items: group.items.filter(
+            (item) => !item.methods || item.methods.includes(certifiedDateMethod)
+          ),
+        }
+      : group
+  );
+
+  const totalItems = visibleGroups.reduce((sum, g) => sum + g.items.length, 0);
+  const doneItems = visibleGroups.reduce(
+    (sum, g) => sum + g.items.filter((item) => checked[item.id]).length,
+    0
+  );
 
   function toggle(id: string) {
     setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -25,9 +49,19 @@ export function ChecklistSection() {
         </span>
       </h2>
 
-      {checklistGroups.map((group) => (
+      {visibleGroups.map((group) => (
         <div className="card checklist-group" key={group.id}>
           <h3 className="checklist-group-title">{group.title}</h3>
+
+          {group.id === "certifiedDate" && (
+            <div style={{ marginBottom: 12 }}>
+              <CertifiedDateMethodToggle
+                method={certifiedDateMethod}
+                onChange={onCertifiedDateMethodChange}
+              />
+            </div>
+          )}
+
           <ul className="checklist-items">
             {group.items.map((item) => (
               <li key={item.id}>

@@ -1,4 +1,4 @@
-import type { DeadlineResult } from "../types";
+import type { CertifiedDateMethod as CertifiedDateMethodType, DeadlineResult } from "../types";
 import { formatDateKorean, parseDate } from "../utils/date";
 import { getUrgencyLevel, urgencyLabel } from "../utils/urgency";
 import { CertifiedDateMethod } from "./CertifiedDateMethod";
@@ -19,9 +19,15 @@ const GLOSSARY_MAP: Record<string, string[]> = {
 
 interface DeadlineCardProps {
   deadline: DeadlineResult;
+  certifiedDateMethod: CertifiedDateMethodType;
+  onCertifiedDateMethodChange: (method: CertifiedDateMethodType) => void;
 }
 
-export function DeadlineCard({ deadline }: DeadlineCardProps) {
+export function DeadlineCard({
+  deadline,
+  certifiedDateMethod,
+  onCertifiedDateMethodChange,
+}: DeadlineCardProps) {
   if (!deadline.applicable) {
     return (
       <div className="card deadline-card deadline-card--muted">
@@ -83,7 +89,9 @@ export function DeadlineCard({ deadline }: DeadlineCardProps) {
         </div>
       )}
 
-      {deadline.id === "certifiedDate" && <CertifiedDateMethod />}
+      {deadline.id === "certifiedDate" && (
+        <CertifiedDateMethod method={certifiedDateMethod} onChange={onCertifiedDateMethodChange} />
+      )}
 
       {deadline.legalBasis && (
         <p className="deadline-legal-basis">법적 근거: {deadline.legalBasis}</p>

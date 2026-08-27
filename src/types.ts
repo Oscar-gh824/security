@@ -41,6 +41,8 @@ export interface ChecklistItem {
   id: string;
   label: string;
   detail?: string;
+  /** 특정 확정일자 처리 방법에만 해당하는 준비물인 경우 지정. 없으면 모든 방법에 공통 */
+  methods?: CertifiedDateMethod[];
 }
 
 export interface ChecklistGroup {

@@ -1,34 +1,20 @@
-import { useState } from "react";
 import type { CertifiedDateMethod as CertifiedDateMethodType } from "../types";
 import { officialLinks } from "../data/links";
+import { CertifiedDateMethodToggle } from "./CertifiedDateMethodToggle";
 import { LinkIcon } from "./icons";
 
-const METHOD_LABEL: Record<CertifiedDateMethodType, string> = {
-  online: "온라인",
-  visit: "방문",
-};
+interface CertifiedDateMethodProps {
+  method: CertifiedDateMethodType;
+  onChange: (method: CertifiedDateMethodType) => void;
+}
 
 /** 확정일자 처리 방법(온라인/방문) 선택 및 방법별 안내 */
-export function CertifiedDateMethod() {
-  const [method, setMethod] = useState<CertifiedDateMethodType>("online");
+export function CertifiedDateMethod({ method, onChange }: CertifiedDateMethodProps) {
   const irosLink = officialLinks.find((l) => l.id === "iros");
 
   return (
     <div className="certified-date-method">
-      <div className="segmented" role="tablist" aria-label="확정일자 처리 방법">
-        {(Object.keys(METHOD_LABEL) as CertifiedDateMethodType[]).map((key) => (
-          <button
-            key={key}
-            type="button"
-            role="tab"
-            aria-selected={method === key}
-            className={method === key ? "active" : ""}
-            onClick={() => setMethod(key)}
-          >
-            {METHOD_LABEL[key]}
-          </button>
-        ))}
-      </div>
+      <CertifiedDateMethodToggle method={method} onChange={onChange} />
 
       {method === "online" ? (
         <div className="certified-date-method-body">
