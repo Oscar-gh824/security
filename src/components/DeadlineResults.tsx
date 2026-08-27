@@ -1,13 +1,19 @@
-import type { DeadlineResult } from "../types";
+import type { CertifiedDateMethod, DeadlineResult } from "../types";
 import { downloadICS } from "../utils/ics";
 import { CalendarIcon, DownloadIcon } from "./icons";
 import { DeadlineCard } from "./DeadlineCard";
 
 interface DeadlineResultsProps {
   deadlines: DeadlineResult[];
+  certifiedDateMethod: CertifiedDateMethod;
+  onCertifiedDateMethodChange: (method: CertifiedDateMethod) => void;
 }
 
-export function DeadlineResults({ deadlines }: DeadlineResultsProps) {
+export function DeadlineResults({
+  deadlines,
+  certifiedDateMethod,
+  onCertifiedDateMethodChange,
+}: DeadlineResultsProps) {
   if (deadlines.length === 0) return null;
 
   const hasApplicable = deadlines.some((d) => d.applicable && d.dueDate);
@@ -21,7 +27,12 @@ export function DeadlineResults({ deadlines }: DeadlineResultsProps) {
 
       <div className="deadline-list">
         {deadlines.map((d) => (
-          <DeadlineCard key={d.id} deadline={d} />
+          <DeadlineCard
+            key={d.id}
+            deadline={d}
+            certifiedDateMethod={certifiedDateMethod}
+            onCertifiedDateMethodChange={onCertifiedDateMethodChange}
+          />
         ))}
       </div>
 

@@ -1,6 +1,39 @@
 import type { DeadlineResult } from "../types";
 import { addDays, formatToICSDate, parseDate } from "./date";
 
+/** RFC 5545 TEXT 값 이스케이프: 백슬래시·세미콜론·쉼표·줄바꿈 */
+function escapeICSText(text: string): string {
+  return text
+    .replace(/\\/g, "\\\\")
+    .replace(/;/g, "\\;")
+    .replace(/,/g, "\\,")
+    .replace(/\n/g, "\\n");
+}
+
+/** RFC 5545 줄 폴딩: 한 줄이 75옥텟을 넘으면 접어서 이어붙임 (멀티바이트 문자 중간 절단 방지) */
+function foldICSLine(line: string): string {
+  const bytes = new TextEncoder().encode(line);
+  if (bytes.length <= 75) return line;
+
+  const decoder = new TextDecoder();
+  const chunks: string[] = [];
+  let start = 0;
+  let limit = 75;
+
+  while (start < bytes.length) {
+    let end = Math.min(start + limit, bytes.length);
+    // UTF-8 연속 바이트(10xxxxxx) 중간에서 자르지 않도록 뒤로 물러남
+    while (end < bytes.length && end > start && (bytes[end] & 0xc0) === 0x80) {
+      end--;
+    }
+    chunks.push(decoder.decode(bytes.slice(start, end)));
+    start = end;
+    limit = 74; // 다음 줄부터는 앞에 붙는 공백 1바이트를 포함해 75옥텟
+  }
+
+  return chunks.map((chunk, i) => (i === 0 ? chunk : ` ${chunk}`)).join("\r\n");
+}
+
 /** 마감일 목록을 하나의 .ics 파일 내용으로 변환 */
 export function buildICS(deadlines: DeadlineResult[]): string {
   const events = deadlines
@@ -15,10 +48,12 @@ export function buildICS(deadlines: DeadlineResult[]): string {
         `UID:${uid}`,
         `DTSTART;VALUE=DATE:${formatToICSDate(start)}`,
         `DTEND;VALUE=DATE:${formatToICSDate(end)}`,
-        `SUMMARY:[보증금지킴이] ${d.title} 마감일`,
-        `DESCRIPTION:${d.description.replace(/\n/g, "\\n")}`,
+        `SUMMARY:${escapeICSText(`[보증금지킴이] ${d.title} 마감일`)}`,
+        `DESCRIPTION:${escapeICSText(d.description)}`,
         "END:VEVENT",
-      ].join("\r\n");
+      ]
+        .map(foldICSLine)
+        .join("\r\n");
     })
     .filter(Boolean);
 

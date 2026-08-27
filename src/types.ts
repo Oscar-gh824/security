@@ -33,12 +33,16 @@ export interface DeadlineResult {
   /** 오늘 기준 D-day (음수면 지남) */
   dDay?: number;
   description: string;
+  /** 법적 근거 (조문) */
+  legalBasis?: string;
 }
 
 export interface ChecklistItem {
   id: string;
   label: string;
   detail?: string;
+  /** 특정 확정일자 처리 방법에만 해당하는 준비물인 경우 지정. 없으면 모든 방법에 공통 */
+  methods?: CertifiedDateMethod[];
 }
 
 export interface ChecklistGroup {

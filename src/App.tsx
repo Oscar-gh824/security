@@ -9,7 +9,7 @@ import { PenaltyCalculator } from "./components/PenaltyCalculator";
 import { FaqSection } from "./components/FaqSection";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { calculateDeadlines } from "./utils/deadlines";
-import type { MoveInInfo } from "./types";
+import type { CertifiedDateMethod, MoveInInfo } from "./types";
 
 // 화면이 비어 보이지 않도록 채워두는 더미 이사 정보
 const DEFAULT_MOVE_IN_INFO: MoveInInfo = {
@@ -25,6 +25,10 @@ function App() {
     "boggl-guard-move-in-info",
     DEFAULT_MOVE_IN_INFO
   );
+  const [certifiedDateMethod, setCertifiedDateMethod] = useLocalStorage<CertifiedDateMethod>(
+    "boggl-guard-certified-date-method",
+    "online"
+  );
 
   const deadlines = useMemo(() => calculateDeadlines(moveInInfo), [moveInInfo]);
 
@@ -32,10 +36,17 @@ function App() {
     <div className="page">
       <Header />
       <MoveInForm value={moveInInfo} onChange={setMoveInInfo} />
-      <DeadlineResults deadlines={deadlines} />
-      <ChecklistSection />
+      <DeadlineResults
+        deadlines={deadlines}
+        certifiedDateMethod={certifiedDateMethod}
+        onCertifiedDateMethodChange={setCertifiedDateMethod}
+      />
+      <ChecklistSection
+        certifiedDateMethod={certifiedDateMethod}
+        onCertifiedDateMethodChange={setCertifiedDateMethod}
+      />
       <QuickLinks />
-      <PenaltyCalculator />
+      <PenaltyCalculator defaultDepositAmount={moveInInfo.depositAmount} />
       <FaqSection />
       <Footer />
     </div>
