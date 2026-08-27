@@ -5,7 +5,7 @@ export const officialLinks: OfficialLink[] = [
     id: "gov24",
     label: "정부24 – 전입신고",
     description: "온라인으로 전입신고를 접수할 수 있어요.",
-    url: "https://www.gov.kr/mw/AA020InfoCappView.do?HighCtgCD=A01010001&CappBizCD=13100000015",
+    url: "https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=13100000016",
   },
   {
     id: "iros",
