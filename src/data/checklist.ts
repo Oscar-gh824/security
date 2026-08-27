@@ -26,9 +26,22 @@ export const checklistGroups: ChecklistGroup[] = [
     id: "rentReport",
     title: "전월세 신고 준비물",
     items: [
-      { id: "rent-contract", label: "임대차계약서", detail: "표준계약서 권장" },
-      { id: "rent-id", label: "신분증", detail: "임차인·임대인 모두" },
-      { id: "rent-info", label: "임대인 정보", detail: "성명, 주소 등 계약서 기재 정보" },
+      {
+        id: "rent-contract",
+        label: "임대차계약서 (또는 계약 증빙서류)",
+        detail: "표준계약서는 서명만으로 공동신고 인정. 계약서가 없다면 입금내역 등으로도 신고 가능",
+      },
+      { id: "rent-id", label: "신고인 신분증", detail: "온라인은 본인인증, 방문은 신분증 지참" },
+      {
+        id: "rent-signature",
+        label: "상대방 서명 또는 위임장",
+        detail: "임대인·임차인이 함께 신고하지 못하면 계약서에 양쪽 서명이 있거나, 위임장(자필서명)과 위임인 신분증 사본이 필요",
+      },
+      {
+        id: "rent-info",
+        label: "임대인·임차인 인적사항 및 목적물 정보",
+        detail: "성명, 주소, 임대료, 계약기간 등 계약서 기재 정보",
+      },
     ],
   },
 ];
