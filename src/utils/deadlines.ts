@@ -5,7 +5,7 @@ import { addDays, diffFromToday, formatDate, parseDate } from "./date";
 const MOVE_IN_REPORT_DAYS = 14;
 /** 전월세 신고 기한 (계약 체결일 기준) */
 const RENT_REPORT_DAYS = 30;
-/** 전월세 신고 대상 기준: 보증금(만원) 또는 월세(만원) 초과 시 */
+/** 전월세 신고 대상 기준: 보증금(만원) 또는 월세(만원) 초과 시 — 부동산 거래신고 등에 관한 법률 시행령 */
 const RENT_REPORT_DEPOSIT_THRESHOLD = 6000;
 const RENT_REPORT_MONTHLY_THRESHOLD = 30;
 
@@ -58,7 +58,7 @@ export function calculateDeadlines(info: MoveInInfo): DeadlineResult[] {
         dDay: diffFromToday(due),
         description: `계약 체결일(${formatDate(contract)})로부터 ${RENT_REPORT_DAYS}일 이내 국토부 전월세신고 시스템 또는 주민센터에서 신고해야 해요. 단순 지연신고 시 최대 30만원(2026.6.1 계도기간 종료 후 기준)의 과태료가 부과될 수 있어요.${
           info.contractType === "renewal"
-            ? " 갱신 계약이면서 보증금·월세 증액이 없다면 신고 대상에서 제외될 수 있으니 FAQ를 확인하세요."
+            ? " 갱신 계약이면서 보증금·월세 금액 변동 없이 기간만 연장한다면 신고 대상에서 제외될 수 있으니 FAQ를 확인하세요."
             : ""
         }`,
         legalBasis: "부동산 거래신고 등에 관한 법률 제6조의2, 제28조",
