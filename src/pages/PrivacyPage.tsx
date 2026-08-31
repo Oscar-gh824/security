@@ -3,10 +3,9 @@ import { Footer } from "../components/Footer";
 
 const EFFECTIVE_DATE = "2026-08-27";
 
-/**
- * 운영자명/연락 이메일은 개인정보라 자리표시자로 남겨둠.
- * 실제 서비스 공개 전 [운영자명], [이메일 주소] 부분을 채워야 함.
- */
+const OPERATOR_NAME = "보증금지키단 운영팀";
+const CONTACT_EMAIL = "exper6202@naver.com";
+
 export default function PrivacyPage() {
   return (
     <div className="page">
@@ -18,10 +17,12 @@ export default function PrivacyPage() {
 
           <h2>1. 운영자 정보</h2>
           <p>
-            보증금지킴이(이하 "서비스")는 <strong>[운영자명]</strong>이(가) 운영합니다. 서비스 이용 중
+            보증금지킴이(이하 "서비스")는 <strong>{OPERATOR_NAME}</strong>이(가) 운영합니다. 서비스 이용 중
             문의사항은 아래 연락처로 문의해주세요.
           </p>
-          <p>연락처: <strong>[이메일 주소]</strong></p>
+          <p>
+            연락처: <strong><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></strong>
+          </p>
 
           <h2>2. 수집하는 정보와 저장 방식</h2>
           <p>
