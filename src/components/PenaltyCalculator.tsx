@@ -28,7 +28,10 @@ export function PenaltyCalculator({ defaultDepositAmount, overdueDays }: Penalty
   const [procedure, setProcedure] = useState<PenaltyProcedure>(initialOverdue?.[0] ?? "moveIn");
   const [daysLate, setDaysLate] = useState(initialOverdue?.[1] ?? 0);
   const [depositAmount, setDepositAmount] = useState(defaultDepositAmount ?? 0);
-  const [showAutoFillNote, setShowAutoFillNote] = useState(initialOverdue !== undefined);
+  // 사용자가 직접 지연 일수를 입력하기 전까지는, 신고 종류 탭을 바꿀 때마다
+  // 그 종류의 실제 지연 일수로 계속 다시 채워줌(예: 전입신고 D+2, 전월세신고 D+3이 동시에
+  // 지났으면 탭을 바꿀 때마다 2 ↔ 3으로 맞춰짐)
+  const [autoSyncEnabled, setAutoSyncEnabled] = useState(initialOverdue !== undefined);
 
   const estimate = estimatePenalty(
     procedure,
@@ -62,8 +65,10 @@ export function PenaltyCalculator({ defaultDepositAmount, overdueDays }: Penalty
                 type="button"
                 className={procedure === key ? "active" : ""}
                 onClick={() => {
-                  setShowAutoFillNote(false);
                   setProcedure(key);
+                  if (autoSyncEnabled) {
+                    setDaysLate(overdueDays?.[key] ?? 0);
+                  }
                 }}
               >
                 {PROCEDURE_LABEL[key]}
@@ -82,11 +87,11 @@ export function PenaltyCalculator({ defaultDepositAmount, overdueDays }: Penalty
             value={daysLate}
             onFocus={selectOnFocus}
             onChange={(e) => {
-              setShowAutoFillNote(false);
+              setAutoSyncEnabled(false);
               setDaysLate(parseDigits(e.target.value));
             }}
           />
-          {showAutoFillNote && (
+          {autoSyncEnabled && daysLate > 0 && (
             <p className="sub-text" style={{ marginTop: 4 }}>
               위 자동 판정 결과의 지연 일수를 가져왔어요. 직접 다른 값을 넣어도 돼요.
             </p>

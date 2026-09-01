@@ -72,7 +72,7 @@ export function estimatePenalty(
     range = {
       minWon: 20000,
       maxWon: 100000,
-      note: "전월세 신고 지연 3개월 이내 구간. 계약금액 1억원 미만이면 2만원 수준이에요.",
+      note: "전월세 신고 지연 3개월 이내 구간. 계약금액 1억원 이하면 2만원 수준이에요.",
     };
   } else if (daysLate <= 730) {
     range = {
