@@ -56,7 +56,7 @@ export function calculateDeadlines(info: MoveInInfo): DeadlineResult[] {
         applicable: true,
         dueDate: formatDate(due),
         dDay: diffFromToday(due),
-        description: `계약 체결일(${formatDate(contract)})로부터 ${RENT_REPORT_DAYS}일 이내 국토부 전월세신고 시스템 또는 주민센터에서 신고해야 해요. 단순 지연신고 시 최대 30만원(2025.6.1 계도기간 종료 후 기준)의 과태료가 부과될 수 있어요.${
+        description: `계약 체결일(${formatDate(contract)})로부터 ${RENT_REPORT_DAYS}일 이내 국토부 전월세신고 시스템 또는 주민센터에서 신고해야 해요. 전월세 신고는 법적 의무 사항이며, 미신고 시 최대 30만원의 과태료가 부과될 수 있어요.${
           info.contractType === "renewal"
             ? " 갱신 계약이면서 보증금·월세 금액 변동 없이 기간만 연장한다면 신고 대상에서 제외될 수 있으니 FAQ를 확인하세요."
             : ""
