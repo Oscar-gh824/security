@@ -44,7 +44,7 @@ export function DeadlineResults({
           onClick={() => downloadICS(deadlines)}
         >
           <DownloadIcon width={18} height={18} />
-          구글 캘린더에 마감일 추가 (.ics 내보내기)
+          마감일 전체 파일로 내보내기 (.ics, 애플캘린더·아웃룩 등)
         </button>
       )}
     </section>

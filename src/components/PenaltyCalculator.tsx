@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { estimatePenalty, formatWon, type PenaltyProcedure } from "../utils/penalty";
+import { parseDigits, selectOnFocus } from "../utils/dom";
 import { CalculatorIcon } from "./icons";
 
 const PROCEDURE_LABEL: Record<PenaltyProcedure, string> = {
@@ -10,12 +11,23 @@ const PROCEDURE_LABEL: Record<PenaltyProcedure, string> = {
 interface PenaltyCalculatorProps {
   /** 이사 정보 입력 폼의 보증금을 기본값으로 채워 입력 수고를 줄여줌 */
   defaultDepositAmount?: number;
+  /** 자동 판정 결과에서 이미 기한을 넘긴 신고가 있으면, 지연 일수를 미리 채워주기 위한 값 */
+  overdueDays?: Partial<Record<PenaltyProcedure, number>>;
 }
 
-export function PenaltyCalculator({ defaultDepositAmount }: PenaltyCalculatorProps) {
-  const [procedure, setProcedure] = useState<PenaltyProcedure>("moveIn");
-  const [daysLate, setDaysLate] = useState(0);
+function findOverdueEntry(overdueDays?: Partial<Record<PenaltyProcedure, number>>) {
+  return (Object.keys(PROCEDURE_LABEL) as PenaltyProcedure[])
+    .map((key) => [key, overdueDays?.[key]] as const)
+    .find((entry): entry is [PenaltyProcedure, number] => (entry[1] ?? 0) > 0);
+}
+
+export function PenaltyCalculator({ defaultDepositAmount, overdueDays }: PenaltyCalculatorProps) {
+  const initialOverdue = findOverdueEntry(overdueDays);
+
+  const [procedure, setProcedure] = useState<PenaltyProcedure>(initialOverdue?.[0] ?? "moveIn");
+  const [daysLate, setDaysLate] = useState(initialOverdue?.[1] ?? 0);
   const [depositAmount, setDepositAmount] = useState(defaultDepositAmount ?? 0);
+  const [showAutoFillNote, setShowAutoFillNote] = useState(initialOverdue !== undefined);
 
   const estimate = estimatePenalty(
     procedure,
@@ -48,7 +60,10 @@ export function PenaltyCalculator({ defaultDepositAmount }: PenaltyCalculatorPro
                 key={key}
                 type="button"
                 className={procedure === key ? "active" : ""}
-                onClick={() => setProcedure(key)}
+                onClick={() => {
+                  setShowAutoFillNote(false);
+                  setProcedure(key);
+                }}
               >
                 {PROCEDURE_LABEL[key]}
               </button>
@@ -60,12 +75,21 @@ export function PenaltyCalculator({ defaultDepositAmount }: PenaltyCalculatorPro
           <label htmlFor="daysLate">기한에서 며칠 지났나요?</label>
           <input
             id="daysLate"
-            type="number"
-            min={0}
+            type="text"
             inputMode="numeric"
+            pattern="[0-9]*"
             value={daysLate}
-            onChange={(e) => setDaysLate(Math.max(0, Number(e.target.value)))}
+            onFocus={selectOnFocus}
+            onChange={(e) => {
+              setShowAutoFillNote(false);
+              setDaysLate(parseDigits(e.target.value));
+            }}
           />
+          {showAutoFillNote && (
+            <p className="sub-text" style={{ marginTop: 4 }}>
+              위 자동 판정 결과의 지연 일수를 가져왔어요. 직접 다른 값을 넣어도 돼요.
+            </p>
+          )}
         </div>
 
         {procedure === "rentReport" && (
@@ -73,11 +97,12 @@ export function PenaltyCalculator({ defaultDepositAmount }: PenaltyCalculatorPro
             <label htmlFor="penaltyDepositAmount">계약금액 (보증금, 만원)</label>
             <input
               id="penaltyDepositAmount"
-              type="number"
-              min={0}
+              type="text"
               inputMode="numeric"
+              pattern="[0-9]*"
               value={depositAmount}
-              onChange={(e) => setDepositAmount(Math.max(0, Number(e.target.value)))}
+              onFocus={selectOnFocus}
+              onChange={(e) => setDepositAmount(parseDigits(e.target.value))}
             />
           </div>
         )}

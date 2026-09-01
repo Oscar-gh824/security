@@ -10,6 +10,7 @@ import { FaqSection } from "./components/FaqSection";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { calculateDeadlines } from "./utils/deadlines";
 import type { CertifiedDateMethod, MoveInInfo } from "./types";
+import type { PenaltyProcedure } from "./utils/penalty";
 
 // 화면이 비어 보이지 않도록 채워두는 더미 이사 정보
 const DEFAULT_MOVE_IN_INFO: MoveInInfo = {
@@ -32,6 +33,17 @@ function App() {
 
   const deadlines = useMemo(() => calculateDeadlines(moveInInfo), [moveInInfo]);
 
+  // 이미 기한을 넘긴 신고가 있으면 과태료 계산기에 지연 일수를 미리 채워주기 위해 계산
+  const overdueDays = useMemo(() => {
+    const days: Partial<Record<PenaltyProcedure, number>> = {};
+    for (const d of deadlines) {
+      if ((d.id === "moveIn" || d.id === "rentReport") && d.applicable && d.dDay !== undefined && d.dDay < 0) {
+        days[d.id] = -d.dDay;
+      }
+    }
+    return days;
+  }, [deadlines]);
+
   return (
     <div className="page">
       <Header />
@@ -46,7 +58,7 @@ function App() {
         onCertifiedDateMethodChange={setCertifiedDateMethod}
       />
       <QuickLinks />
-      <PenaltyCalculator defaultDepositAmount={moveInInfo.depositAmount} />
+      <PenaltyCalculator defaultDepositAmount={moveInInfo.depositAmount} overdueDays={overdueDays} />
       <FaqSection />
       <Footer />
     </div>

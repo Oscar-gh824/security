@@ -1,5 +1,6 @@
 import type { CertifiedDateMethod as CertifiedDateMethodType, DeadlineResult } from "../types";
 import { formatDateKorean, parseDate } from "../utils/date";
+import { buildGoogleCalendarUrl } from "../utils/ics";
 import { getUrgencyLevel, urgencyLabel } from "../utils/urgency";
 import { CertifiedDateMethod } from "./CertifiedDateMethod";
 import { GlossaryTerm } from "./GlossaryTerm";
@@ -45,6 +46,7 @@ export function DeadlineCard({
   const links = (LINK_MAP[deadline.id] ?? [])
     .map((id) => officialLinks.find((l) => l.id === id))
     .filter(Boolean);
+  const googleCalendarUrl = buildGoogleCalendarUrl(deadline);
 
   return (
     <div className={`card deadline-card deadline-card--${level}`}>
@@ -69,7 +71,7 @@ export function DeadlineCard({
 
       <p className="deadline-desc">{deadline.description}</p>
 
-      {links.length > 0 && (
+      {(links.length > 0 || googleCalendarUrl) && (
         <div className="deadline-links">
           {links.map(
             (link) =>
@@ -85,6 +87,12 @@ export function DeadlineCard({
                   {link.label}
                 </a>
               )
+          )}
+          {googleCalendarUrl && (
+            <a href={googleCalendarUrl} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm">
+              <CalendarIcon width={16} height={16} />
+              구글 캘린더에 추가
+            </a>
           )}
         </div>
       )}

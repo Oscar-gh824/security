@@ -258,6 +258,17 @@ button {
   color: var(--sub);
 }
 
+.header-guide-link {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: 999px;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
 /* ===== Footer ===== */
 .footer {
   max-width: 640px;

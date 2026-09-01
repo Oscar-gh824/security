@@ -12,7 +12,7 @@ export function Header({ variant = "home" }: HeaderProps) {
         <span className="header-badge">
           <HomeIcon width={20} height={20} />
         </span>
-        <div>
+        <div style={{ flex: 1 }}>
           {variant === "home" ? (
             <h1 className="header-title">보증금지킴이</h1>
           ) : (
@@ -22,6 +22,11 @@ export function Header({ variant = "home" }: HeaderProps) {
           )}
           <p className="header-subtitle">이사 후 놓치기 쉬운 신고 마감일, 한 번에 챙기세요</p>
         </div>
+        {variant === "home" && (
+          <a href="/guide/" className="header-guide-link">
+            사용법 보기
+          </a>
+        )}
       </div>
     </header>
   );

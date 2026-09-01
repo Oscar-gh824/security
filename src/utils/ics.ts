@@ -67,6 +67,26 @@ export function buildICS(deadlines: DeadlineResult[]): string {
   ].join("\r\n");
 }
 
+/**
+ * 구글 캘린더 "일정 만들기" 화면을 마감일 정보로 미리 채운 채 여는 링크.
+ * 파일 다운로드·수동 가져오기 없이 클릭 한 번으로 등록 화면까지 이동함(저장은 사용자가 눌러야 함).
+ */
+export function buildGoogleCalendarUrl(deadline: DeadlineResult): string | null {
+  if (!deadline.applicable || !deadline.dueDate) return null;
+  const start = parseDate(deadline.dueDate);
+  if (!start) return null;
+  const end = addDays(start, 1);
+
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: `[보증금지킴이] ${deadline.title} 마감일`,
+    dates: `${formatToICSDate(start)}/${formatToICSDate(end)}`,
+    details: deadline.description,
+  });
+
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
 export function downloadICS(deadlines: DeadlineResult[], filename = "boggl-guard-deadlines.ics") {
   const content = buildICS(deadlines);
   const blob = new Blob([content], { type: "text/calendar;charset=utf-8" });

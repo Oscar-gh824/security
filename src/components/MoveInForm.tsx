@@ -1,4 +1,5 @@
 import type { ContractType, MoveInInfo } from "../types";
+import { parseDigits, selectOnFocus } from "../utils/dom";
 import { HomeIcon } from "./icons";
 
 interface MoveInFormProps {
@@ -44,11 +45,12 @@ export function MoveInForm({ value, onChange }: MoveInFormProps) {
             <label htmlFor="depositAmount">보증금 (만원)</label>
             <input
               id="depositAmount"
-              type="number"
-              min={0}
+              type="text"
               inputMode="numeric"
+              pattern="[0-9]*"
               value={value.depositAmount}
-              onChange={(e) => update("depositAmount", Number(e.target.value))}
+              onFocus={selectOnFocus}
+              onChange={(e) => update("depositAmount", parseDigits(e.target.value))}
             />
           </div>
 
@@ -56,11 +58,12 @@ export function MoveInForm({ value, onChange }: MoveInFormProps) {
             <label htmlFor="monthlyRent">월세 (만원)</label>
             <input
               id="monthlyRent"
-              type="number"
-              min={0}
+              type="text"
               inputMode="numeric"
+              pattern="[0-9]*"
               value={value.monthlyRent}
-              onChange={(e) => update("monthlyRent", Number(e.target.value))}
+              onFocus={selectOnFocus}
+              onChange={(e) => update("monthlyRent", parseDigits(e.target.value))}
             />
           </div>
         </div>
