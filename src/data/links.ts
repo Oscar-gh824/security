@@ -19,4 +19,10 @@ export const officialLinks: OfficialLink[] = [
     description: "임대차 계약 내용을 온라인으로 신고할 수 있어요.",
     url: "https://rtms.molit.go.kr",
   },
+  {
+    id: "myhome-center",
+    label: "마이홈 – 관할 주민센터 찾기",
+    description: "주소로 가까운 행정복지센터(주민센터)의 위치와 연락처를 확인할 수 있어요.",
+    url: "https://www.myhome.go.kr/hws/portal/cont/selectAdministrativeWelfareCenter.do",
+  },
 ];

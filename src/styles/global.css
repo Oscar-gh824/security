@@ -390,6 +390,21 @@ button {
   color: var(--text);
 }
 
+.deadline-cta {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--danger-bg);
+  color: var(--danger);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.field-amount-hint {
+  margin-top: 4px;
+}
+
 .deadline-links {
   display: flex;
   flex-wrap: wrap;

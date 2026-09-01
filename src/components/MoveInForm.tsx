@@ -1,5 +1,6 @@
 import type { ContractType, MoveInInfo } from "../types";
 import { parseDigits, selectOnFocus } from "../utils/dom";
+import { formatManwonInput, toKoreanAmount } from "../utils/money";
 import { HomeIcon } from "./icons";
 
 interface MoveInFormProps {
@@ -48,10 +49,11 @@ export function MoveInForm({ value, onChange }: MoveInFormProps) {
               type="text"
               inputMode="numeric"
               pattern="[0-9]*"
-              value={value.depositAmount}
+              value={formatManwonInput(value.depositAmount)}
               onFocus={selectOnFocus}
               onChange={(e) => update("depositAmount", parseDigits(e.target.value))}
             />
+            <p className="sub-text field-amount-hint">{toKoreanAmount(value.depositAmount)}</p>
           </div>
 
           <div className="field">
@@ -61,10 +63,11 @@ export function MoveInForm({ value, onChange }: MoveInFormProps) {
               type="text"
               inputMode="numeric"
               pattern="[0-9]*"
-              value={value.monthlyRent}
+              value={formatManwonInput(value.monthlyRent)}
               onFocus={selectOnFocus}
               onChange={(e) => update("monthlyRent", parseDigits(e.target.value))}
             />
+            <p className="sub-text field-amount-hint">{toKoreanAmount(value.monthlyRent)}</p>
           </div>
         </div>
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { estimatePenalty, formatWon, type PenaltyProcedure } from "../utils/penalty";
 import { parseDigits, selectOnFocus } from "../utils/dom";
+import { formatManwonInput, toKoreanAmount } from "../utils/money";
 import { CalculatorIcon } from "./icons";
 
 const PROCEDURE_LABEL: Record<PenaltyProcedure, string> = {
@@ -100,10 +101,11 @@ export function PenaltyCalculator({ defaultDepositAmount, overdueDays }: Penalty
               type="text"
               inputMode="numeric"
               pattern="[0-9]*"
-              value={depositAmount}
+              value={formatManwonInput(depositAmount)}
               onFocus={selectOnFocus}
               onChange={(e) => setDepositAmount(parseDigits(e.target.value))}
             />
+            <p className="sub-text field-amount-hint">{toKoreanAmount(depositAmount)}</p>
           </div>
         )}
 

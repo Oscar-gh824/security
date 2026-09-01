@@ -11,6 +11,7 @@ interface CertifiedDateMethodProps {
 /** 확정일자 처리 방법(온라인/방문) 선택 및 방법별 안내 */
 export function CertifiedDateMethod({ method, onChange }: CertifiedDateMethodProps) {
   const irosLink = officialLinks.find((l) => l.id === "iros");
+  const centerLink = officialLinks.find((l) => l.id === "myhome-center");
 
   return (
     <div className="certified-date-method">
@@ -30,10 +31,18 @@ export function CertifiedDateMethod({ method, onChange }: CertifiedDateMethodPro
           )}
         </div>
       ) : (
-        <p className="sub-text certified-date-method-body">
-          방문 접수: 주소지 관할 등기소 또는 주민센터에서 임대차계약서 원본과 신분증을 지참하면 받을 수
-          있어요. 방문 시 수수료는 약 600원이에요.
-        </p>
+        <div className="certified-date-method-body">
+          <p className="sub-text">
+            방문 접수: 주소지 관할 등기소 또는 주민센터에서 임대차계약서 원본과 신분증을 지참하면 받을 수
+            있어요. 방문 시 수수료는 약 600원이에요.
+          </p>
+          {centerLink && (
+            <a href={centerLink.url} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm">
+              <LinkIcon width={16} height={16} />
+              {centerLink.label}
+            </a>
+          )}
+        </div>
       )}
     </div>
   );
