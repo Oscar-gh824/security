@@ -363,12 +363,17 @@ button {
   background: var(--danger-bg);
   color: var(--danger);
 }
+.badge-recommended-overdue {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
 
 .deadline-card--urgent,
 .deadline-card--overdue {
   border-color: var(--danger);
 }
-.deadline-card--soon {
+.deadline-card--soon,
+.deadline-card--recommended-overdue {
   border-color: var(--warning);
 }
 .deadline-card--muted {
@@ -394,11 +399,17 @@ button {
   margin-top: 10px;
   padding: 10px 12px;
   border-radius: var(--radius-sm);
-  background: var(--danger-bg);
-  color: var(--danger);
   font-size: 13px;
   font-weight: 500;
   line-height: 1.5;
+}
+.deadline-cta--overdue {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+.deadline-cta--recommended-overdue {
+  background: var(--warning-bg);
+  color: var(--warning);
 }
 
 .field-amount-hint {

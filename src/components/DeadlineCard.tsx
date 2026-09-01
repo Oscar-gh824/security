@@ -56,7 +56,7 @@ export function DeadlineCard({
     );
   }
 
-  const level = getUrgencyLevel(deadline.dDay);
+  const level = getUrgencyLevel(deadline.dDay, { isLegalDeadline: deadline.id !== "certifiedDate" });
   const dueDate = deadline.dueDate ? parseDate(deadline.dueDate) : null;
   const links = (LINK_MAP[deadline.id] ?? [])
     .map((id) => officialLinks.find((l) => l.id === id))
@@ -86,8 +86,8 @@ export function DeadlineCard({
 
       <p className="deadline-desc">{deadline.description}</p>
 
-      {level === "overdue" && (
-        <p className="deadline-cta">{OVERDUE_CTA[deadline.id]}</p>
+      {(level === "overdue" || level === "recommended-overdue") && (
+        <p className={`deadline-cta deadline-cta--${level}`}>{OVERDUE_CTA[deadline.id]}</p>
       )}
 
       {(links.length > 0 || googleCalendarUrl) && (
